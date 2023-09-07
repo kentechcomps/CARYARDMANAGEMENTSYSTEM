@@ -6,9 +6,11 @@ from sqlalchemy import (CheckConstraint, UniqueConstraint,
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, sessionmaker
 
-engine = create_engine('sqlite:///Caryard.db')
 
 Base = declarative_base()
+engine = create_engine('sqlite:///Caryard.db')
+Session=sessionmaker(bind=engine)
+session=Session()
 
 class Vehicle(Base):
     __tablename__ = 'Vehicles'
@@ -27,7 +29,7 @@ class Vehicle(Base):
             + f"Grade {self.grade}"
     
 class Customer(Base):
-    __tablename__ = 'customers'
+    __tablename__ = 'Customers'
 
     id = Column(Integer, primary_key=True)
     name = Column(String)
@@ -35,11 +37,11 @@ class Customer(Base):
     phone = Column(String)
 
 class Review(Base):
-    __tablename__ = 'reviews'
+    __tablename__ = 'Reviews'
     id = Column(Integer, primary_key=True)
     star_rating = Column(Integer)
     comment = Column(Text)
-    Vehicle_id = Column(Integer, ForeignKey('restaurants.id'))
-    Customer_id = Column(Integer, ForeignKey('customers.id'))    
-    vehicle = relationship('Restaurant', backref='reviews')
-    customer = relationship('Customer', backref='reviews')
+    Vehicle_id = Column(Integer, ForeignKey('Vehicles.id'))
+    Customer_id = Column(Integer, ForeignKey('Customers.id'))    
+    vehicle = relationship('Vehicle', backref='Reviews')
+    customer = relationship('Customer', backref='Reviews')
