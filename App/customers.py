@@ -1,5 +1,5 @@
 import click
-from models import session, Customer  # Import your SQLAlchemy session and Customer model
+from models import session, Customer ,Review  # Import your SQLAlchemy session and Customer model
 
 @click.group()
 def cli():
@@ -41,6 +41,30 @@ def list_customers():
         
 cli.add_command(list_customers)
 
+@click.command()
+@click.option('--customer-id', prompt='Customer ID', required=True, type=int, help='ID of the customer adding the review')
+@click.option('--rating', prompt='Rating (1-5)', required=True, type=int, help='Rating for the review (1-5)')
+@click.option('--comment', prompt='Comment', required=True, help='Comment for the review')
+
+def add_review(customer_id, rating, comment):
+    """Add a review to the database."""
+
+    try:
+        # Query the database to find the customer by ID
+        customer = session.query(Customer).filter_by(id=customer_id).first()
+
+        if not customer:
+            click.echo(f"Customer with ID {customer_id} not found in the database.")
+        else:
+            # Create a new review and associate it with the customer
+            review = Review(star_rating=rating, comment=comment, customer=customer)
+            session.add(review)
+            session.commit()
+            click.echo('Review submitted successfully.')
+
+    except Exception as e:
+        click.echo(f"An error occurred: {str(e)}")
+cli.add_command(add_review)
 if __name__ == '__main__':
     cli()
 
