@@ -20,6 +20,27 @@ def add_customer(name, email, phone_number):
 
 cli.add_command(add_customer)
 
+@click.command()
+def list_customers():
+    """List all your customers from the database."""
+    
+    try:
+        # Query the database to get all vehicles
+        customers = session.query(Customer).all()
+
+        if not customers:
+            click.echo("You don't have any customers in the database.")
+        else:
+            # Display the list of vehicles
+            click.echo("List of your Customers:")
+            for customer in customers:
+                click.echo(f"ID: {customer.id}, Name: {customer.name}, Email: {customer.email}, Phone: {customer.phone}")
+
+    except Exception as e:
+        click.echo(f"An error occurred: {str(e)}")
+        
+cli.add_command(list_customers)
+
 if __name__ == '__main__':
     cli()
 
