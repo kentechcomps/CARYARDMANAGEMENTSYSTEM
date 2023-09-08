@@ -43,6 +43,32 @@ def list_vehicles():
 
     except Exception as e:
         click.echo(f"An error occurred: {str(e)}")
+        
 cli.add_command(list_vehicles)
+
+@click.command()
+@click.option('--id', prompt='Vehicle ID', required=True, type=int, help='ID of the vehicle to update')
+@click.option('--newprice', prompt='New Price', required=True, type=float, help='New price for the vehicle')
+
+def update_price(id , newprice):
+    """Update vehicles from the database."""
+
+    try:
+    
+        vehicle = session.query(Vehicle).filter_by(id=id).first()
+        if not vehicle:
+            click.echo(f"Vehicle with ID {id} not found in the database.")
+
+        else:
+            #now update the vehicleprice
+            vehicle.price = newprice
+            session.commit()
+            click.echo(f"Price of Vehicle ID {id} updated to {newprice} successfully.")
+
+    except Exception as e:
+        click.echo(f"An error occurred: {str(e)}")
+
+cli.add_command(update_price)
+
 if __name__ == '__main__':
     cli()
