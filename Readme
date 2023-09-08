@@ -1,0 +1,80 @@
+# CARYARDMANAGEMENTSYSTEM
+
+
+The purpose of this project is to provide an easier way for a caryard owner to manage the vehicles available in the car yard.The applications enable the owner to know cars available in the yard , vehicles that have been sold out and also individual details of a car
+It has 3 tables `vehicle` , `customer` , `reviews`
+
+## Table of Contents
+
+- [Getting Started](#getting-started)
+- [Project Structure](#project-structure)
+- [Database Schema](#database-schema)
+- [Features](#features)
+- [Usage](#usage)
+- [Contributing](#contributing)
+- [License](#license)
+
+## Getting Started
+
+To get started with this project, you should have the following prerequisites installed on your system:
+
+- Python 3.x
+- SQLAlchemy
+- SQLite (for database storage)
+
+Clone the project repository to your local machine:
+
+git clone git@github.com:kentechcomps/CARYARDMANAGEMENTSYSTEM.git
+
+`~Run pipenv install`
+
+## Project Structure
+
+The project structure is organized as follows:
+
+- `models.py`: Contains the SQLAlchemy models for `Vehicle`, `Customer`, and `Review`.
+- `caryard.py`: Provides the user with commandline options for adding , deletin and updating vehicle details
+-`customer.py`: Provides the user with commandline options for adding a new customer to the list
+
+- `README.md`: The project's README file.
+
+## Database Schema
+
+The database schema consists of three tables:
+
+- `Vehicle`: Stores information about a specific vehicle including the name , price etc
+- `Customer`: Contains details about customers, such as their name , email and phonenumber.
+- `Review`: stores reviews of a specific client
+
+The relationships between these tables are defined as follows:
+
+- `Vehicle` has a one-to-many relationship with `Review` (one restaurant can have many reviews).
+- `Customer` also has a one-to-many relationship with `Review` (one customer can have many reviews).
+- `Review` belongs to both `Vehicle` and `Customer`.
+
+## Features
+
+This project demonstrates several features related to the customers and vehicles:
+
+- Creating and querying vehicles, customer, and review objects using SQLAlchemy.
+- Establishing relationships between `Vehicles`, `Customers`, and `Reviews`.
+
+
+## Usage
+
+To use the project, you can create instances of `Vehicle`, `Customer`, and `Review` classes and manipulate the data as needed. You can also implement custom methods for your specific use cases, such as calculating statistics or generating reports.
+This projects uses the command 
+
+The provided `customer.py` , `vehicle.py` file allows you to create sample data to test your models and relationships. You can customize the seed data to match your requirements.
+
+## Technologies used
+python
+sqlite
+Commandline
+## Contributors
+
+Kennedy Mutuku
+For more info contact : https://github.com/kentechcomps/CARYARDMANAGEMENTSYSTEM
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
