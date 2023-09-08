@@ -70,5 +70,28 @@ def update_price(id , newprice):
 
 cli.add_command(update_price)
 
+@click.command()
+@click.option('--id', prompt='Vehicle ID', required=True, type=int, help='ID of the vehicle to delete')
+
+def delete_vehicle(id):
+    """Delete a vehicle from the database."""
+
+    try:
+        # Query the database to find the vehicle by ID
+        vehicle = session.query(Vehicle).filter_by(id=id).first()
+
+        if not vehicle:
+            click.echo(f"Vehicle with ID {id} not found in the database.")
+        else:
+            # Delete the vehicle from the database
+            session.delete(vehicle)
+            session.commit()
+            click.echo(f"Vehicle with ID {id} deleted successfully.")
+
+    except Exception as e:
+        click.echo(f"An error occurred: {str(e)}")
+
+cli.add_command(delete_vehicle)
+
 if __name__ == '__main__':
     cli()
